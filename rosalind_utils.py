@@ -26,11 +26,14 @@ def reverse_complement(seq):
     """Given a DNA sequence, return its reverse complement"""
     return Seq(seq).reverse_complement().tostring()
 
+def transcribe(dna_seq):
+    """Transcribe DNA sequence into mRNA sequence"""
+    return Seq(dna_seq, generic_dna).transcribe().tostring()
+    
 def translate(rna_seq):
     """Translate RNA sequence to amino acid sequence"""
     mrna = Seq(rna_seq, generic_rna)
     return mrna.translate().tostring()
-    
 
 def read_fasta(fasta_file):
     """Read fasta file and return the list of records, consisting of
