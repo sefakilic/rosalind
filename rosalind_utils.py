@@ -58,3 +58,68 @@ def choose(n,k):
 def perm(n,k):
     return fac(n) / fac(n-k)
 
+'''
+def LCS(s, t):
+    """
+    http://en.wikipedia.org/wiki/Longest_common_subsequence_problem
+    
+    Given two strings s and t, find the longest common subsequence
+    of s and t. Return the table that is used for each step of calculation.
+    """
+    
+    m = len(s)
+    n = len(t)
+    C = [[0 for i in range(n+1)] for j in range(m+1)]
+    for i in xrange(1, m+1):
+        for j in xrange(1, n+1):
+            if s[i-1] == t[j-1]:
+                C[i][j] = C[i-1][j-1] + 1
+            else:
+                C[i][j] = max(C[i][j-1], C[i-1][j])
+    return C
+
+def LCS_length(C):
+    """The length of the longest subsequence"""
+    return C[-1][-1]
+
+def LCS_backtrack_all(C, s, t, i, j):
+    """Given the scoring table C, strings s and t, find all longest common
+    subsequences. Initial call of this functions has i=len(s) and j=len(t)"""
+    if i==0 or j==0:
+        return {""}
+    elif s[i-1] == t[j-1]:
+        return {Z + s[i-1] for Z in LCS_backtrack_all(C, s, t, i-1, j-1)}
+    else:
+        R = set()
+        if C[i][j-1] >= C[i-1][j]:
+            R = LCS_backtrack_all(C, s, t, i, j-1)
+        if C[i-1][j] >= C[i][j-1]:
+            R = R.union(LCS_backtrack_all(C, s, t, i-1, j))
+        return R
+'''
+
+def longest_common_substring(s, t):
+    """Given two strings s and t, find the longest substring.
+
+    Not to be confuest with subsequence.
+    http://en.wikipedia.org/wiki/Subsequence#Substring_vs._subsequence
+    """
+    L = [[0 for i in range(len(t))] for j in range(len(s))]
+    z = 0
+    ret = set()
+    for i in range(len(s)):
+        for j in range(len(t)):
+            if s[i] == t[j]:
+                if i == 0 or j == 0:
+                    L[i][j] = 1
+                else:
+                    L[i][j] = L[i-1][j-1] + 1
+                if L[i][j] > z:
+                    z = L[i][j]
+                    ret = {s[i-z+1:i+1]}
+                elif L[i][j] == z:
+                    ret = ret.union({s[i-z+1:i+1]})
+            else:
+                L[i][j] = 0
+    return ret
+
