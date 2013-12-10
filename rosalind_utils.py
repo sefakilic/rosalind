@@ -55,6 +55,24 @@ def fac(n):
 def choose(n,k):
     return fac(n) / fac(n-k) / fac(k)
 
+def choose_large(n,k):
+    """n choose k for large values of n and k.
+    Not the best solution, but enough for now.
+    """
+    if k > n/2:
+        return choose_large(n, n-k)
+    i = n-k+1
+    j = 2
+    ret = 1
+    while i <= n:
+        ret *= i
+        i += 1
+        while j <= k and ret % j == 0:
+            ret /= j
+            j += 1
+    assert j >= k
+    return ret
+
 def perm(n,k):
     return fac(n) / fac(n-k)
 
