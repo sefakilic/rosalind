@@ -5,5 +5,5 @@
 
 import sys
 sys.path.append('../../')
-import rosalind_utils
+from rosalind_utils import *
 

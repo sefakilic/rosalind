@@ -18,4 +18,3 @@ def dbru():
         print '(%s, %s)' % (e[0], e[1])
 
     
-
