@@ -77,41 +77,51 @@ def perm(n,k):
     return fac(n) / fac(n-k)
 
 
-def edit_distance_helper(s,t):
+def edit_distance_helper(s,t, gap_pen=1, sub_pen=1):
     """Given two strings s and t, find the edit distance, the minimum number of edit
     operations needed to transform s into t, where an edit operation is defined as
     the substitution, insertion or deletion of a single symbol
     """
     m = len(s)
     n = len(t)
-    C = [[0 for i in range(n+1)] for j in range(m+1)]
+    C = [[None for i in range(n+1)] for j in range(m+1)]
+    for i in xrange(m+1):
+        C[i][0] = i
+    for j in xrange(n+1):
+        C[0][j] = j
+        
     for i in xrange(1, m+1):
         for j in xrange(1, n+1):
-            C[i][j] = min(C[i][j-1] + 1,
-                          C[i-1][j] + 1,
-                          C[i-1][j-1] + (1 if s[i-1] != t[j-1] else 0))
+            C[i][j] = min(C[i][j-1] + gap_pen,
+                          C[i-1][j] + gap_pen,
+                          C[i-1][j-1] + (sub_pen if s[i-1] != t[j-1] else 0))
     return C
 
 def edit_distance(s,t):
     C = edit_distance_helper(s,t)
     return C[-1][-1]
 
-def edit_distance_backtrack(C,s,t):
+def edit_distance_backtrack(C,s,t, used_gap_pen=1, used_sub_pen=1):
     """Given the scoring table C, strings s and t, find one of the best
     alignments."""
     alignment_a = ""
     alignment_b = ""
     i,j = len(s), len(t)
     while i > 0 and j > 0:
-        if C[i][j] == C[i-1][j] + 1:
+        if C[i][j] == C[i-1][j-1] and s[i-1] == t[j-1]:
+            alignment_a += s[i-1]
+            alignment_b += t[j-1]
+            i -= 1
+            j -= 1
+        elif C[i][j] == C[i-1][j] + used_gap_pen:
             alignment_a += s[i-1]
             alignment_b += '-'
             i -= 1
-        elif C[i][j] == C[i][j-1] + 1:
+        elif C[i][j] == C[i][j-1] + used_gap_pen:
             alignment_a += '-'
             alignment_b += t[j-1]
             j -= 1
-        else:
+        else: # if s[i-1] != t[j-1]
             alignment_a += s[i-1]
             alignment_b += t[j-1]
             i -= 1
@@ -123,6 +133,7 @@ def edit_distance_backtrack(C,s,t):
     while j>0:
         alignment_a += '-'
         alignment_b += t[j-1]
+        j -= 1
 
     return alignment_a[::-1], alignment_b[::-1]
 
