@@ -1,1 +1,1 @@
-my solutions for [[rosalind.info]] problems
+my solutions for [[http://rosalind.info][Project Rosalind]] problems
