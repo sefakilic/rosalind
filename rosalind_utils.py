@@ -76,6 +76,9 @@ def choose_large(n,k):
 def perm(n,k):
     return fac(n) / fac(n-k)
 
+def hamming_distance(s,t):
+    """Hamming distance"""
+    return sum(1 if na!=nb else 0 for na,nb in zip(s,t))
 
 def edit_distance_helper(s,t, gap_pen=1, sub_pen=1):
     """Given two strings s and t, find the edit distance, the minimum number of edit
