@@ -18,12 +18,12 @@ def swap(lst, i, j):
 
 def helper(s,t):
     """Given two permutations, return the reversal distance"""
-    stack = []
+    queue = Queue.Queue()
     visited = set()
     
-    stack.append((s,0))
-    while stack:
-        x,d = stack.pop()
+    queue.put((s,0))
+    while not queue.empty():
+        x,d = queue.get()
         visited.add(tuple(x))
         if x == t:
             return d
@@ -31,11 +31,9 @@ def helper(s,t):
             for j in xrange(i+1, len(x)):
                 tmp = swap(x[:], i, j)
                 if tuple(tmp) not in visited:
-                    stack.append((tmp, d+1))
+                    queue.put((tmp, d+1))
     print "shouldn't be here"
                 
-            
-
 def rear():
     with open("rosalind_rear.txt") as f:
         lines = map(lambda x: x.strip(), f.readlines())
@@ -44,7 +42,11 @@ def rear():
     for i in xrange(len(lines)/2):
         s = map(int, lines[2*i].split())
         t = map(int, lines[2*i+1].split())
-        print s
-        print t
+        # map list of numbers to string (list of chars) for memory efficency
+        cs = "".join(chr(ord('a') + i) for i in s)
+        ts = "".join(chr(ord('a') + i) for i in t)
+        print cs
+        print ts
         print helper(s,t)
-        return 
+
+        
