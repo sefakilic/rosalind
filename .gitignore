@@ -5,3 +5,7 @@
 
 # python 
 *.pyc
+
+# ignore haskell
+*.hi
+*.o
