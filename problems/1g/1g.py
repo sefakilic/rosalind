@@ -40,6 +40,8 @@ def _1g():
             mm_dic[mm] += v
         sys.stdout.flush()
 
+    print mm_dic
+
     max_occ = max(mm_dic.values())
     for k,v in mm_dic.items():
         if v == max_occ:
