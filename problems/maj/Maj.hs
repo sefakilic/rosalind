@@ -1,14 +1,24 @@
-module Main where
+-- http://rosalind.info/problems/maj/ 
 
-import RosalindUtils
+import Data.List.Split
+import Data.List
+import Control.Monad
 
+maj :: [Int] -> Int
+maj xs = f $ filter (\g -> length g > (length xs) `quot` 2) (group $ sort xs)
+  where f (xs:_) = head xs
+        f []    = -1
 
+toInt :: String -> Int
+toInt x = (read x) :: Int
 
+main :: IO ()
 main = do
-  l <- readIntList
-  let [k,n] = l
-  majs <- forM [1..k] (\a -> do
-                          l <- readIntList
-                          return (majority l))
-  intercalate " " (map show majs)
-
+  ln <- getLine
+  let k:n:_ = map toInt (splitOn " " ln)
+  forM_ [1..k] (\_ -> do
+                   ln <- getLine
+                   putStr $ show $ maj (map toInt (splitOn " " ln))
+                   putStr " ")
+  putStrLn ""
+    
