@@ -1,2 +1,4 @@
-my solutions for [[http://rosalind.info][Project Rosalind]] problems
+* Project Rosalind
+
+My Python/Haskell solutions for [[http://rosalind.info][Project Rosalind]] problems.
 
