@@ -2,3 +2,5 @@
 
 My Python/Haskell solutions for [[http://rosalind.info][Project Rosalind]] problems.
 
+Check out [[http://rosalind.info/users/sefakilic/][my profile]]!
+
